@@ -20,8 +20,8 @@ socket.onmessage = async event => {
     console.log(data)
 }
 
-// todo: popups depending on recieved message
-// todo: create account
 // todo: forgot account
 // todo: link this with chatroom
+// -- todo: popups depending on recieved message (changing screen, on success, error message on error)
+
 
