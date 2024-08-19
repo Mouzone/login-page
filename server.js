@@ -33,48 +33,44 @@ server.on("connection", socket => {
                 }
             })
         } else if (action === "sign-up") {
-            const email = data["email"]
-            db.get(`SELECT * FROM users WHERE username = ?`,
-                [username], (err, row) => {
-                if (err) {
-                    console.error('Database error:', err);
-                    socket.send(JSON.stringify(
-                        {
-                            error: 'Database error'
-                        }))
-                } else if (row) {
-                    socket.send(JSON.stringify(
-                        {
-                            status: "failure",
-                            message: 'Username is already in use'
-                        }))
-                } else {
-                    db.get(`SELECT * FROM users WHERE email = ?`,
-                [email], (err, row) => {
-                        if (err) {
-                            console.error('Database error:', err);
-                            socket.send(JSON.stringify(
-                                {
-                                    error: 'Database error'
-                                }))
-                        } else if (row) {
-                            socket.send(JSON.stringify(
-                                {
+            const email = data["email"];
+            db.get(
+                `SELECT * FROM users WHERE username = ? OR email = ?`,
+                [username, email],
+                (err, row) => {
+                    if (err) {
+                        console.error('Database error:', err);
+                        socket.send(
+                            JSON.stringify({ error: 'Database error' })
+                        )
+                    } else if (row) {
+                        if (row.username === username) {
+                            socket.send(
+                                JSON.stringify({
+                                    status: "failure",
+                                    message: 'Username is already in use'
+                                })
+                            );
+                        } else if (row.email === email) {
+                            socket.send(
+                                JSON.stringify({
                                     status: "failure",
                                     message: 'Email is already in use'
-                                }))
-                        } else {
-                            socket.send(JSON.stringify(
-                                {
-                                    status: "success",
-                                    message: 'Username and Email are free'
-                                }
-                            ))
+                                })
+                            )
                         }
-                    })
+                    } else {
+                        socket.send(
+                            JSON.stringify({
+                                status: "success",
+                                message: 'Username and Email are free'
+                            })
+                        )
+                    }
                 }
-            })
+            );
         }
+
     })
 
     socket.on("close", () => {
