@@ -18,7 +18,7 @@ signup_form.addEventListener("submit", event => {
     } else if (confirm_email_element.value !== email_element.value) {
         password_error.classList.remove("active")
         password_error.textContent = ""
-        
+
         email_error.classList.add("active")
         email_error.textContent = "Emails are different"
     } else {
@@ -36,3 +36,5 @@ socket.onmessage = async event => {
     const data = JSON.parse(event.data)
     console.log(data)
 }
+
+// todo: errors for username and emails already being in use
