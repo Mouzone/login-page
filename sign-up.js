@@ -23,12 +23,11 @@ signup_form.addEventListener("submit", event => {
         email_error.textContent = "Emails are different"
     } else {
         socket.send(JSON.stringify({
-            action: "login",
+            action: "sign-up",
             email: email_element,
             username: username_element.value,
             password: password_element.value
         }))
-        signup_form.reset()
     }
 })
 

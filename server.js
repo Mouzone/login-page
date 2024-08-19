@@ -32,9 +32,31 @@ server.on("connection", socket => {
                     }))
                 }
             })
+        } else if (action === "sign-up") {
+            const email = data["email"]
+            db.get(`SELECT * FROM users WHERE username = ? OR email = ?`,
+                [username, email], (err, row) => {
+                if (err) {
+                    console.error('Database error:', err);
+                    socket.send(JSON.stringify(
+                        {
+                            error: 'Database error'
+                        }));
+                } else if (row) {
+                    socket.send(JSON.stringify(
+                        {
+                            status: "failure",
+                            message: 'Username or email is already in use'
+                        }));
+                } else {
+                    socket.send(JSON.stringify(
+                        {
+                            status: "success",
+                            message: 'Username and email are available'
+                        }));
+                }
+            });
         }
-
-
     })
 
     socket.on("close", () => {
