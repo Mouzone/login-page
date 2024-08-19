@@ -33,7 +33,7 @@ server.on("connection", socket => {
                 }
             })
         } else if (action === "sign-up") {
-            const email = data["email"];
+            const email = data["email"]
             db.get(
                 `SELECT * FROM users WHERE username = ? OR email = ?`,
                 [username, email],
@@ -60,12 +60,24 @@ server.on("connection", socket => {
                             )
                         }
                     } else {
-                        socket.send(
-                            JSON.stringify({
-                                status: "success",
-                                message: 'Username and Email are free'
-                            })
-                        )
+                        db.run(`INSERT INTO users (username, password, email) VALUES (?, ?, ?)`,
+                            [username, password, email],
+                            err => {
+                            if (err) {
+                                console.error('Insert error:', err);
+                                socket.send(JSON.stringify(
+                                    {
+                                        status: "failure",
+                                        message: "Insert error"
+                                    }))
+                            } else {
+                                socket.send(JSON.stringify(
+                                    {
+                                        status: "success",
+                                        message: 'Username and Email are free'
+                                    }))
+                            }
+                        })
                     }
                 }
             );
