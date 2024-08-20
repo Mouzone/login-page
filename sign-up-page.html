@@ -10,6 +10,7 @@
             <form id="sign-up">
                 <label for="sign-up-username"> Username </label>
                 <input type="text" id="sign-up-username" required>
+                <span id="username-error" class="error" aria-live="polite"></span>
 
                 <label for="sign-up-password"> Password </label>
                 <input type="password" id="sign-up-password" required>
@@ -20,10 +21,11 @@
 
                 <label for="sign-up-email"> Email </label>
                 <input type="email" id="sign-up-email" required>
+                <span id="email-error" class="error" aria-live="polite"></span>
 
                 <label for="sign-up-confirm-email"> Confirm Email </label>
                 <input type="email" id="sign-up-confirm-email" required>
-                <span id="email-error" class="error" aria-live="polite"></span>
+                <span id="confirmation-email-error" class="error" aria-live="polite"></span>
 
                 <button type="submit"> Create </button>
             </form>

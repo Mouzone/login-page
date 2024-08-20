@@ -23,6 +23,6 @@ socket.onmessage = async event => {
 // todo: error if account not found
 // todo: forgot account
 // todo: link this with chatroom
-// -- todo: popups depending on recieved message (changing screen, on success, error message on error)
+// -- todo: popups depending on recieved message (changing screen on success, error message on error)
 
 

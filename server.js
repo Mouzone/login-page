@@ -48,6 +48,7 @@ server.on("connection", socket => {
                             socket.send(
                                 JSON.stringify({
                                     status: "failure",
+                                    type: "username",
                                     message: 'Username is already in use'
                                 })
                             );
@@ -55,6 +56,7 @@ server.on("connection", socket => {
                             socket.send(
                                 JSON.stringify({
                                     status: "failure",
+                                    type: "email",
                                     message: 'Email is already in use'
                                 })
                             )
@@ -74,7 +76,7 @@ server.on("connection", socket => {
                                 socket.send(JSON.stringify(
                                     {
                                         status: "success",
-                                        message: 'Username and Email are free'
+                                        message: 'Account created'
                                     }))
                             }
                         })
@@ -82,7 +84,6 @@ server.on("connection", socket => {
                 }
             );
         }
-
     })
 
     socket.on("close", () => {
