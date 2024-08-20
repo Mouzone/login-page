@@ -11,16 +11,19 @@ login_form.addEventListener("submit", event => {
         username: username_element.value,
         password: password_element.value
     }))
-    login_form.reset()
 })
 
-
+const account_error = document.getElementById("account-error")
 socket.onmessage = async event => {
     const data = JSON.parse(event.data)
-    console.log(data)
+    if (data.status === "success") {
+        login_form.reset()
+    } else {
+        account_error.textContent = data["message"]
+        account_error.classList.add("active")
+    }
 }
 
-// todo: error if account not found
 // todo: forgot account
 // todo: link this with chatroom
 // -- todo: popups depending on recieved message (changing screen on success, error message on error)

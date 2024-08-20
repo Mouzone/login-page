@@ -28,7 +28,7 @@ server.on("connection", socket => {
                 } else {
                     socket.send(JSON.stringify({
                         status: "failure",
-                        message: "Invalid credentials"
+                        message: "Account not found"
                     }))
                 }
             })
