@@ -1,8 +1,8 @@
 const WebSocket = require("ws")
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
-const dbPath = path.join(__dirname, 'db', 'users.db');
-const db = new sqlite3.Database(dbPath);
+const sqlite3 = require('sqlite3').verbose()
+const path = require('path')
+const dbPath = path.join(__dirname, 'db', 'users.db')
+const db = new sqlite3.Database(dbPath)
 
 const server = new WebSocket.Server({port: 8080})
 server.on("connection", socket => {
@@ -39,7 +39,7 @@ server.on("connection", socket => {
                 [username, email],
                 (err, row) => {
                     if (err) {
-                        console.error('Database error:', err);
+                        console.error('Database error:', err)
                         socket.send(
                             JSON.stringify({ error: 'Database error' })
                         )
@@ -51,7 +51,7 @@ server.on("connection", socket => {
                                     type: "username",
                                     message: 'Username is already in use'
                                 })
-                            );
+                            )
                         } else if (row.email === email) {
                             socket.send(
                                 JSON.stringify({
@@ -66,7 +66,7 @@ server.on("connection", socket => {
                             [username, password, email],
                             err => {
                             if (err) {
-                                console.error('Insert error:', err);
+                                console.error('Insert error:', err)
                                 socket.send(JSON.stringify(
                                     {
                                         status: "failure",
@@ -82,7 +82,7 @@ server.on("connection", socket => {
                         })
                     }
                 }
-            );
+            )
         }
     })
 
